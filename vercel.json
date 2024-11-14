@@ -6,11 +6,16 @@
     },
     "routes": [
         {
+            "src": "/build/(.*)",
+            "dest": "/public/build/"
+        },
+        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
     ],
     "env": {
+        "APP_NAME": "Teenhealth",
         "APP_ENV": "production",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
