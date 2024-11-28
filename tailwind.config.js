@@ -12,7 +12,10 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Circular Std', ...defaultTheme.fontFamily.sans],
+            },
+            fontSize: {
+                '3.25xl': '2rem',
             },
         },
     },
