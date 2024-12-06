@@ -10,13 +10,13 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
 
     <!-- Styles -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/cm.js'])
 </head>
 <body class="antialiased font-sans bg-zinc-100 min-h-screen">
 <x-navigation></x-navigation>
 
-<section class="w-full h-screen flex justify-center items-center px-8 pb-28 sm:pb-40 md:pb-44 lg:pb-52">
-    <div class="text-center">
+<section class="w-full h-screen flex justify-center items-center px-8 pt-20 pb-28 sm:pb-40 md:pb-44 lg:pb-52">
+    <div class="text-center" id="title">
         <div class="flex justify-center">
             <img src="/assets/illustrations/ill_bird1.png" class="hidden sm:block h-12 lg:h-14 absolute -ml-[26rem] lg:-ml-[34rem] -mt-4 lg:-mt-6 transition-all duration-500 ease-out" />
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-sky-500 pb-4 sm:pb-8">Coming soon!</h1>

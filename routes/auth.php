@@ -1,31 +1,24 @@
 <?php
 
-use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth;
+use App\Http\Controllers\Base\IndexController;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
-Route::middleware('guest')->group(function () {
-    Volt::route('register', 'pages.auth.register')
-        ->name('register');
+Route::middleware(['guest', 'throttle:auth'])->group(function () {
 
-    Volt::route('login', 'pages.auth.login')
-        ->name('login');
-
-    Volt::route('forgot-password', 'pages.auth.forgot-password')
-        ->name('password.request');
-
-    Volt::route('reset-password/{token}', 'pages.auth.reset-password')
-        ->name('password.reset');
+    Route::post('/login', [Auth\LoginController::class, 'login']);
+    Route::post('/register', [Auth\RegisterController::class, 'register']);
+    // Route::post('/forgot-password', []);
+    // Route::post('/forgot-password/r/{token}', []);
 });
 
-Route::middleware('auth')->group(function () {
-    Volt::route('verify-email', 'pages.auth.verify-email')
-        ->name('verification.notice');
+Route::post('/logout', [Auth\LoginController::class, 'logout'])
+    ->middleware('auth');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
-
-    Volt::route('confirm-password', 'pages.auth.confirm-password')
-        ->name('password.confirm');
+// Fallback other routes to react
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [IndexController::class, 'index']);
+    Route::get('/register', [IndexController::class, 'index']);
+    Route::get('/forgot-password', [IndexController::class, 'index']);
+    Route::get('/forgot-password/r/{token}', [IndexController::class, 'index']);
 });
