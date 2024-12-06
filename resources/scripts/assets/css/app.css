@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    @apply min-h-screen bg-gray-50;
+}
+
+@layer base {
+    :root {
+        --radius: 0.5rem;
+    }
+}
+
+/* Disable ms-edge reveal button */
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+@font-face {
+    font-family: "Circular Std";
+    src: local('Circular Std'),
+        url('/fonts/CircularStd-Book.woff') format('woff');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Circular Std";
+    src: local('Circular Std'),
+        url('/fonts/CircularStd-Medium.woff') format('woff');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Circular Std";
+    src: local('Circular Std'),
+        url('/fonts/CircularStd-Bold.woff') format('woff');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Secured";
+    src: url('/fonts/Security-Mask.woff') format('woff');
+}
+
+:root {
+    font-family: 'Circular Std', sans-serif;
+}
