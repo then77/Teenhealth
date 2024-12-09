@@ -17,6 +17,7 @@ class LoginController extends Controller
             $credentials = $request->validate([
                 'email' => ['required'],
                 'password' => ['required'],
+                'remember' => ['boolean', 'nullable']
             ]);
         } catch (ValidationException $error) {
             return ApiResponse::error(

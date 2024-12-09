@@ -18,8 +18,8 @@ class RegisterController extends Controller
         // Validate the request data
         try {
             $credentials = $request->validate([
-                'email' => ['required', 'email'],
-                'name' => ['required', 'string', 'min:3'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'name' => ['required', 'string', 'min:3', 'max:255'],
                 'password' => [
                     'required', 'string',
                     Password::min(8)
@@ -48,7 +48,7 @@ class RegisterController extends Controller
         // create user
         try {
             $user = User::create([
-                'email' => $credentials['email'],
+                'email' => strtolower($credentials['email']),
                 'name' => $credentials['name'],
                 'password' => Hash::make($credentials['password']),
                 'is_admin' => false,
