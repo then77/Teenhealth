@@ -4,11 +4,12 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 import { AtSign, Key, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, UseFormReturn } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { resetPasswordScheme } from "@/lib/schemes/auth-form";
 
-import axios, { AxiosResponse } from "axios";
+import { resetPasswordScheme } from "@/lib/schemes/auth-form";
+import dataSubmit from "@/api/auth/reset";
+
 import { toast } from "react-hot-toast";
 
 import IllLeft from "@/assets/illustrations/ill_leftside.png";
@@ -39,80 +40,10 @@ export default function ResetPassword() {
         resolver: zodResolver(resetPasswordScheme),
     });
 
-    async function dataSubmit(
-        values: z.infer<typeof resetPasswordScheme>,
-        resolve: (value: AxiosResponse<any, any>, message?: string) => void,
-        reject: (reason?: any) => void
-    ) {
-
-        // add token to values
-        let valuesToSubmit: {
-            token: string | undefined;
-            email: string;
-            newPassword: string;
-            confirmPassword?: string;
-        } = { ...values, token };
-
-        // remove confirmPassword from values
-        const { confirmPassword, ...rest } = valuesToSubmit;
-        valuesToSubmit = rest;
-
-        try {
-            const response = await axios.post(location.pathname, valuesToSubmit);
-            if (response.status === 200) {
-
-                setTimeout(() => window.location.replace('/login'), 200);
-                resolve(response);
-
-            } else {
-                const message = await apiErrorMessageParser(response, form);
-                if (message) {
-                    reject(message);
-                } else {
-                    reject();
-                }
-            }
-        } catch (error) {
-            console.error(error);
-            reject();
-        }
-    }
-
-    async function apiErrorMessageParser(
-        response: AxiosResponse<any, any>,
-        form: UseFormReturn<z.infer<typeof resetPasswordScheme>>
-    ): Promise<string | null> {
-        if (response.headers['content-type'] !== 'application/json') return null;
-
-        interface ValidationError {
-            field: any;
-            message: string;
-        }
-
-        try {
-            const data = response.data;
-
-            // form validation error
-            if (data.errors && Array.isArray(data.errors)) {
-                data.errors.map((error: ValidationError) => {
-                    form.setError(error.field, {
-                        type: "custom",
-                        message: error.message
-                    });
-                });
-            }
-
-            if (data.message) {
-                return data.message;
-            } else return null;
-
-        } catch (error) { }
-        return null;
-    }
-
     const onSubmit = async (values: z.infer<typeof resetPasswordScheme>) => {
+        const data = { ...values, token };
         await toast.promise(
-            new Promise((resolve, reject) => dataSubmit(values, resolve, reject)), {
+            new Promise((resolve, reject) => dataSubmit(data, form, resolve, reject)), {
                 loading: "Sending request...",
                 success: (e: any) => e ? e.data.message : "Berhasil reset password!",
                 error: (e) => e ? (typeof e === 'string' ? e : e.message) : "Gagal reset. Coba lagi nanti."

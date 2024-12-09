@@ -1,13 +1,18 @@
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
-import { forgotPasswordScheme, loginScheme, registerScheme } from "@/lib/schemes/auth-form";
+import {
+    forgotPasswordScheme,
+    loginScheme,
+    registerScheme,
+    resetPasswordScheme
+} from "@/lib/schemes/auth-form";
 import { AxiosResponse } from "axios";
 
 type ValidationError = { [key: string]: string };
 
 export async function apiErrorMessageParser(
     response: AxiosResponse<any, any>,
-    form: UseFormReturn<z.infer<typeof loginScheme>> | UseFormReturn<z.infer<typeof registerScheme>> | UseFormReturn<z.infer<typeof forgotPasswordScheme>>,
+    form: UseFormReturn<z.infer<typeof loginScheme>> | UseFormReturn<z.infer<typeof registerScheme>> | UseFormReturn<z.infer<typeof forgotPasswordScheme>> | UseFormReturn<z.infer<typeof resetPasswordScheme>>,
 ): Promise<string | null> {
     if (response.headers['content-type'] !== 'application/json') {
         return null;
