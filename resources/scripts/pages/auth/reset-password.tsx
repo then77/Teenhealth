@@ -61,10 +61,8 @@ export default function ResetPassword() {
             const response = await axios.post(location.pathname, valuesToSubmit);
             if (response.status === 200) {
 
-                // if json response and contains message, return message
-                if (response.headers['content-type'] === 'application/json' && response.data.message) {
-                    resolve(response, response.data.message);
-                } else resolve(response);
+                setTimeout(() => window.location.replace('/login'), 200);
+                resolve(response);
 
             } else {
                 const message = await apiErrorMessageParser(response, form);
@@ -116,8 +114,8 @@ export default function ResetPassword() {
         await toast.promise(
             new Promise((resolve, reject) => dataSubmit(values, resolve, reject)), {
                 loading: "Sending request...",
-                success: (e: any) => e ? e.message : "Berhasil reset password!",
-                error: (e) => e ? e.message : "Gagal reset. Coba lagi nanti."
+                success: (e: any) => e ? e.data.message : "Berhasil reset password!",
+                error: (e) => e ? (typeof e === 'string' ? e : e.message) : "Gagal reset. Coba lagi nanti."
             });
     }
 
