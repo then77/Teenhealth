@@ -12,7 +12,7 @@ type ValidationError = { [key: string]: string };
 
 export async function apiErrorMessageParser(
     response: AxiosResponse<any, any>,
-    form: UseFormReturn<z.infer<typeof loginScheme>> | UseFormReturn<z.infer<typeof registerScheme>> | UseFormReturn<z.infer<typeof forgotPasswordScheme>> | UseFormReturn<z.infer<typeof resetPasswordScheme>>,
+    form?: UseFormReturn<z.infer<typeof loginScheme>> | UseFormReturn<z.infer<typeof registerScheme>> | UseFormReturn<z.infer<typeof forgotPasswordScheme>> | UseFormReturn<z.infer<typeof resetPasswordScheme>>,
 ): Promise<string | null> {
     if (response.headers['content-type'] !== 'application/json') {
         return null;
@@ -23,7 +23,7 @@ export async function apiErrorMessageParser(
 
         if (data.errors) {
             for (const [key, value] of Object.entries(data.errors)) {
-                form.setError(key as any, {
+                form?.setError(key as any, {
                     type: "custom",
                     message: value as string
                 });

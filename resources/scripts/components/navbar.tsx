@@ -4,17 +4,38 @@ import { cn } from "@/lib/utils";
 
 import { Link, useLocation } from "react-router";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import {
+    ArrowRight,
+    BookOpen,
+    House,
+    Info,
+    SquareArrowOutUpRight,
+    UserIcon,
+    LogOut,
+    Menu
+} from "lucide-react";
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import { useStoreState } from "@/store";
+import { User } from "@/store/user";
 
 import logoLight from "@/assets/logo/light_64.png";
 import defaultAvatar from "@/assets/illustrations/avatar.png";
-import { 
-    Avatar, 
-    AvatarFallback, 
-    AvatarImage 
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage
 } from "@/components/ui/avatar";
+import { toast } from "react-hot-toast";
+import logout from "@/api/auth/logout";
 
 interface NavbarLinks {
     href: string;
@@ -110,17 +131,26 @@ export default function Navbar({
                 {/* Login button */}
                 <div className="flex justify-end">
                     {user ? (
-                        <Avatar>
-                            <AvatarFallback>N</AvatarFallback>
-                            <AvatarImage src={user.profile_picture ?? defaultAvatar} />
-                        </Avatar>
+                        <DropdownCustom user={user} links={links} navItems={navItems}>
+                            <Avatar>
+                                <AvatarFallback>N</AvatarFallback>
+                                <AvatarImage src={user.profile_picture ?? defaultAvatar} />
+                            </Avatar>
+                        </DropdownCustom>
                     ) : (
-                        <Button asChild>
-                            <Link to="/login">
-                                Mulai
-                                <ArrowRight />
-                            </Link>
-                        </Button>
+                        <>
+                            <Button className="hidden lg:inline-flex" asChild>
+                                <Link to="/login">
+                                    Mulai
+                                    <ArrowRight />
+                                </Link>
+                            </Button>
+                            <div className="lg:hidden">
+                                <DropdownCustom user={user} links={links} navItems={navItems}>
+                                    <Menu />
+                                </DropdownCustom>
+                            </div>
+                        </>
                     )}
                 </div>
             </div>
@@ -139,30 +169,103 @@ interface NavbarLinkItemProps extends NavbarLinkItemBaseProps {
     link: string;
     target?: string;
     selected: boolean;
+    children?: React.ReactNode;
+};
+
+function DropdownCustom({
+    user, links, navItems, children
+}: {
+    user: User | null,
+    links: NavbarLinks[],
+    navItems: NavbarLinkItemBaseProps | undefined,
+    children: React.ReactNode
+}) {
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger>
+                {children}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-[90vw] mx-[5vw] sm:w-64 sm:mr-8 lg:mr-16 mt-2 p-4 py-4 sm:p-2 sm:py-3">
+                <div className="flex flex-col px-1 gap-3 sm:gap-0 lg:hidden">
+                    {links.map((link) => {
+                        return (
+                            <DropdownMenuItem key={link.link} className="focus:bg-transparent p-0">
+                                <NavbarLinkItem
+                                    key={link.link}
+                                    {...link}
+                                    selected={link.href === location.pathname}
+                                    {...navItems}
+                                >
+                                    {link.link === "Home"
+                                        ? <House className="w-4 h-4" />
+                                        : link.link === "Learn"
+                                            ? <BookOpen className="w-4 h-4" />
+                                            : link.link === "About"
+                                                ? <Info className="w-4 h-4" />
+                                                : <SquareArrowOutUpRight className="w-4 h-4" />}
+                                </NavbarLinkItem>
+                            </DropdownMenuItem>
+                        )
+                    })}
+                    <DropdownMenuSeparator />
+                </div>
+                {
+                    user ? (
+                        <>
+                            <div className="flex flex-col px-2 py-2">
+                                <DropdownMenuLabel className="font-medium">{user.name}</DropdownMenuLabel>
+                                <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+                            </div>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem><UserIcon /> Profile</DropdownMenuItem>
+                            <DropdownMenuItem className="text-red-500 focus:text-red-500 focus:bg-red-50" onClick={callLogout}><LogOut /> Logout</DropdownMenuItem>
+                        </>
+                    ) : <DropdownMenuItem className="focus:bg-transparent">
+                        <Button asChild>
+                            <Link className="w-full flex justify-center items-center gap-2" to="/login">
+                                Mulai
+                                <ArrowRight />
+                            </Link>
+                        </Button>
+                    </DropdownMenuItem>
+                }
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
+const callLogout = async () => {
+    await toast.promise(
+        new Promise((resolve, reject) => logout(resolve, reject)), {
+        loading: "Logging out...",
+        success: "Berhasil keluar",
+        error: "Gagal keluar"
+    });
 };
 
 const NavbarLinkItem = React.forwardRef<any, NavbarLinkItemProps>(({
     href, link, selected, target,
-    className, ...props
+    className, children, ...props
 }, ref) => {
 
     return selected ? (
-
-        <p ref={ref} className={cn(
-            "text-blue-400 text-lg cursor-default",
-            className
-        )} {...props}>{link}</p>
-
-    ) : (
-
-        <Link
-            ref={ref}
-            to={href}
-            target={target}
-            className={cn(
-                "text-zinc-800 hover:text-blue-400 duration-200 text-lg",
+        <div className="flex items-center gap-3 sm:gap-0" ref={ref}>
+            {children && <div className="bg-blue-400 sm:bg-transparent text-white sm:text-blue-400 rounded-lg w-9 h-9 flex justify-center items-center">{children}</div>}
+            <p className={cn(
+                "text-blue-400 text-lg cursor-default",
                 className
-            )} {...props}>{link}</Link>
+            )} {...props}>{link}</p>
+        </div>
+    ) : (
+        <Link ref={ref} to={href} target={target} className={cn(
+            "text-zinc-800 hover:text-blue-400 duration-200 text-lg",
+            className
+        )}>
+            <div className="flex items-center gap-3 sm:gap-0">
+                {children && <div className="bg-zinc-100 sm:bg-transparent text-zinc-800 sm:text-inherit rounded-lg w-9 h-9 flex justify-center items-center">{children}</div>}
+                <p {...props} >{link}</p>
+            </div>
+        </Link>
 
     );
 });
