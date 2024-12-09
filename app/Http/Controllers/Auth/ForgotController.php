@@ -46,7 +46,7 @@ class ForgotController extends Controller
             $request->validate([
                 'token' => ['required', 'string'],
                 'email' => ['required', 'string', 'email', 'max:255'],
-                'password' => [
+                'newPassword' => [
                     'required', 'string',
                     Rules\Password::min(8)
                         ->letters()
@@ -58,11 +58,11 @@ class ForgotController extends Controller
             return ApiResponse::error(422, __('validation.new.error', ['attribute' => 'reset password']), $error->errors());
         }
 
-        $credentials = $request->only('email', 'password', 'token');
+        $credentials = $request->only('email', 'newPassword', 'token');
         $status = Password::reset(
             [
                 'email' => $credentials['email'],
-                'password' => $credentials['password'],
+                'password' => $credentials['newPassword'],
                 'token' => $credentials['token'],
             ],
             function ($user, $password) {
