@@ -34,3 +34,22 @@ export const registerScheme = z.object({
         });
     }
 });
+
+export const resetPasswordScheme = z.object({
+    email: z.string({ required_error: "Terjadi masalah. Coba reload halaman." })
+        .min(1, "Terjadi masalah. Coba reload halaman."),
+    newPassword: z.string({ required_error: "Password baru wajib diisi." })
+        .min(8, "Password minimal 8 karakter.")
+        .regex(/^(?=.*[a-z])(?=.*[A-Z]).*$/, "Password harus mengandung huruf kecil dan huruf besar.")
+        .regex(/^(?=.*\d).*$/, "Password harus mengandung angka."),
+    confirmPassword: z.string({ required_error: "Konfirmasi password wajib diisi." })
+        .min(1, "Konfirmasi password wajib diisi.")
+}).superRefine(({ newPassword, confirmPassword }, ctx) => {
+    if (newPassword !== confirmPassword) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Password tidak sama.",
+            path: ["confirmPassword"],
+        });
+    }
+});

@@ -8,8 +8,8 @@ Route::middleware(['guest', 'throttle:auth'])->group(function () {
 
     Route::post('/login', [Auth\LoginController::class, 'login']);
     Route::post('/register', [Auth\RegisterController::class, 'register']);
-    // Route::post('/forgot-password', []);
-    // Route::post('/forgot-password/r/{token}', []);
+    Route::post('/forgot-password', [Auth\ForgotController::class, 'send']);
+    Route::post('/forgot-password/r/{token}', [Auth\ForgotController::class, 'reset']);
 });
 
 Route::post('/logout', [Auth\LoginController::class, 'logout'])

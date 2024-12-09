@@ -10,6 +10,8 @@ import ProgressBar from '@/components/progress-bar';
 import MainLayout from '@/pages/layouts/main';
 const AuthLayout = lazy(() => import('@/pages/layouts/auth'));
 
+const ResetPassword = lazy(() => import('@/pages/auth/reset-password'));
+
 import Home from "@/pages/base/home";
 import Navbar from "@/components/navbar";
 const Error404 = lazy(() => import('@/pages/misc/not-found'));
@@ -28,6 +30,8 @@ function Routable() {
                     <Route path="register" />
                     <Route path="forgot-password" />
                 </Route>
+
+                <Route path="forgot-password/r/:token" element={<ResetPassword />} />
 
                 <Route path="*" element={<Error404 />} />
 

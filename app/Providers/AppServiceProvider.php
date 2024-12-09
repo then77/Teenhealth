@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
+
+        // Custom reset password notification url
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return config('app.url') . '/forgot-password/r/' . $token . '?email=' . $user->email;
+        });
 
         // Register global rate limit
         RateLimiter::for('global', function (Request $request) {
