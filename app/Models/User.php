@@ -3,14 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,5 +47,18 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
             'password' => 'hashed',
         ];
+    }
+
+    public function createAccount($request)
+    {
+        $credentials = $request->only('name', 'email', 'password');
+        return User::create([
+            'name' => $credentials['name'],
+            'email' => $credentials['email'],
+            'password' => Hash::make($credentials['password']),
+            'email_verified_at' => null,
+            'is_admin' => false,
+            'profile_pic' => null,
+        ]);
     }
 }

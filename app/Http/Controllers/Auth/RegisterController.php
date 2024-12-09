@@ -30,9 +30,9 @@ class RegisterController extends Controller
             ]);
         } catch (ValidationException $error) {
             sleep(1);
-            return ApiResponse::create(
+            return ApiResponse::error(
                 422, __('validation.new.error', ['attribute' => 'login']),
-                null, $error->errors()
+                $error->errors()
             );
         }
 
@@ -40,21 +40,14 @@ class RegisterController extends Controller
         $user = User::where('email', $credentials['email'])->first();
         if ($user) {
             sleep(1);
-            return ApiResponse::create(
+            return ApiResponse::error(
                 400, __('validation.new.error', ['attribute' => 'register']),
-                null, ['email' => [__('validation.unique', ['attribute' => 'email'])]]);
+                ['email' => [__('validation.unique', ['attribute' => 'email'])]]);
         }
 
         // create user
         try {
-            $user = User::create([
-                'email' => strtolower($credentials['email']),
-                'name' => $credentials['name'],
-                'password' => Hash::make($credentials['password']),
-                'is_admin' => false,
-                'email_verified_at' => null,
-                'profile_pic' => null,
-            ]);
+            $user = User::createAccount($request);
         } catch (\Exception $e) {
             sleep(1);
             return ApiResponse::create(
@@ -64,6 +57,7 @@ class RegisterController extends Controller
         // auto login
         try {
             Auth::login($user);
+            $request->session()->regenerate();
         } catch (\Exception $e) {
             sleep(1);
             return ApiResponse::success(__('base.success', ['action' => 'register']));

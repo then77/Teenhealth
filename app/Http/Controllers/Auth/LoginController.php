@@ -14,7 +14,7 @@ class LoginController extends Controller
     {
         // Validate the request data
         try {
-            $credentials = $request->validate([
+            $request->validate([
                 'email' => ['required'],
                 'password' => ['required'],
                 'remember' => ['boolean', 'nullable']
@@ -29,7 +29,7 @@ class LoginController extends Controller
         $remember = $request->boolean('remember');
 
         // attempt to authenticate the user
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::attempt($request->only('email', 'password'), $remember)) {
 
             // Regenerate session for security
             $request->session()->regenerate();
