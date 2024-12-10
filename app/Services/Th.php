@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class Th
@@ -13,10 +14,10 @@ class Th
      */
     public static function loadStore(): ?string
     {
-        $userData = self::partialUserData();
 
         $final = [
-            'user' => $userData
+            'user' => self::partialUserData(),
+            'joined_courses' => self::joinedCourses()
         ];
         return base64_encode(json_encode($final));
     }
@@ -41,5 +42,29 @@ class Th
         }
 
         return $data;
+    }
+
+    public static function joinedCourses(): ?array {
+        $user = Auth::user();
+
+        if (!$user) {
+            return null;
+        }
+
+        $enrolledCourses = $user->courseEnrollments()->with('course')->get();
+
+        $courses = [];
+        foreach ($enrolledCourses as $enrolledCourse) {
+            $course = $enrolledCourse->course;
+            $courses[] = [
+                'id' => $course->id,
+                'name' => $course->name,
+                'description' => $course->description,
+                'banner_url' => $course->banner_url,
+                'theme_color' => $course->theme_color,
+            ];
+        }
+
+        return $courses;
     }
 }
