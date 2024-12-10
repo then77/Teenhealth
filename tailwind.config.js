@@ -25,18 +25,18 @@ export default {
             fontSize: {
                 '3.25xl': '1.875rem',
             },
-              fontFamily: {
-                  sans: ['"Circular Std"', "ui-sans-serif", "system-ui", "sans-serif", '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
+            fontFamily: {
+                sans: ['"Circular Std"', "ui-sans-serif", "system-ui", "sans-serif", '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
                 secured: ['"Secured"']
-              },
-              borderRadius: {
-                  lg: 'var(--radius)',
-                  md: 'calc(var(--radius) - 2px)',
-                  sm: 'calc(var(--radius) - 4px)'
-              },
-              colors: {
+            },
+            borderRadius: {
+                lg: 'var(--radius)',
+                md: 'calc(var(--radius) - 2px)',
+                sm: 'calc(var(--radius) - 4px)'
+            },
+            colors: {
                 'primary-color': '#2892D7',
-              },
+            },
             boxShadow: {
                 xs: '0 0 3px 0 rgb(0 0 0 / 0.05)'
             },
@@ -45,14 +45,19 @@ export default {
                     '0%': { transform: 'scale(0.97)', opacity: '0.7' },
                     '100%': { transform: 'scale(1)', opacity: '1' }
                 },
+                zoomOut: {
+                    '0%': { transform: 'scale(1)', opacity: '1' },
+                    '100%': { transform: 'scale(0.97)', opacity: '0' }
+                },
                 shake: {
                     '0%': { transform: 'rotate(0deg)' },
                     '50%': { transform: 'rotate(8deg)' },
                     '100%': { transform: 'rotate(0deg)' }
-                }
+                },
             },
             animation: {
                 zoomIn: 'zoomIn .2s ease-out 1',
+                zoomOut: 'zoomOut .1s ease-out 1',
                 shake: 'shake 20s ease-in-out infinite'
             }
         },

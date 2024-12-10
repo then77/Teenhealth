@@ -1,0 +1,1 @@
+&copy; {{ date('Y') }} {{ config('app.name') }} platform by Team Impact.

@@ -4,8 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
@@ -50,7 +53,21 @@ class User extends Authenticatable
         ];
     }
 
-    public function createAccount($request)
+    // Relationship to get all user course enrollments
+    public function courseEnrollments(): HasMany
+    {
+        return $this->hasMany(UserCourse::class);
+    }
+
+    // Relationship to get courses through the pivot table
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'users_courses')
+            ->withPivot(['progress_id', 'progress_percent', 'completed'])
+            ->withTimestamps();
+    }
+
+    public static function createAccount($request)
     {
         $credentials = $request->only('name', 'email', 'password');
         return User::create([

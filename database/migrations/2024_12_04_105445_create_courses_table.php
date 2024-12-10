@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('enabled')->default(false);
 
             $table->unsignedSmallInteger('order');
+            $table->string('name');
             $table->longText('description')->nullable();
             $table->text('banner_url')->nullable();
 
