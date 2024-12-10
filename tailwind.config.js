@@ -11,6 +11,10 @@ export default {
 
     theme: {
         extend: {
+            padding: {
+                'view-h-padding':'220px',
+                'nm':'30px',
+            },
             height: {
                 '1.25': '0.325rem',
                 '18': '4.5rem',
@@ -30,7 +34,9 @@ export default {
                   md: 'calc(var(--radius) - 2px)',
                   sm: 'calc(var(--radius) - 4px)'
               },
-              colors: {},
+              colors: {
+                'primary-color': '#2892D7',
+              },
             boxShadow: {
                 xs: '0 0 3px 0 rgb(0 0 0 / 0.05)'
             },
