@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
+use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotController extends Controller
 {
@@ -28,7 +30,21 @@ class ForgotController extends Controller
         }
 
         // try to send reset password email
-        $status = Password::sendResetLink($request->only('email'));
+        //
+        $status = Password::broker()->sendResetLink(
+            $request->only('email'),
+            function($user, $token) {
+                $resetUrl = url(route('password.reset', [
+                    'token' => $token,
+                    'email' => $user->email
+                ], true));
+
+                Mail::to($user->email)->send(new ResetPasswordMail(
+                    $user->email,
+                    $resetUrl
+                ));
+            }
+        );
 
         if ($status == Password::RESET_LINK_SENT) {
             return ApiResponse::success(__('passwords.sent'));
@@ -36,6 +52,11 @@ class ForgotController extends Controller
 
         // Add delay to slow down brute force attempts
         sleep(1);
+
+        // Check if throttled
+        if ($status == Password::RESET_THROTTLED) {
+            return ApiResponse::error(429, __('passwords.throttled'));
+        }
 
         return ApiResponse::error(401, __('validation.new.error', ['attribute' => 'forgot password']));
     }

@@ -15,7 +15,7 @@ return [
 
     'reset' => 'Password berhasil diubah.',
     'sent' => 'Berhasil dikirim. Silakan cek email.',
-    'throttled' => 'Coba lagi setelah :seconds detik.',
+    'throttled' => 'Mohon tunggu sebelum mencoba lagi.',
     'token' => 'Reset token tidak valid.',
     'user' => "Akun tidak ditemukan.",
 
