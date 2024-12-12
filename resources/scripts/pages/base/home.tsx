@@ -13,12 +13,21 @@ import square_tile from "@/assets/illustrations/square.png";
 export default function Home() {
     return (
         <Page title="Home">
-            <html className='scroll-smooth'>
-                <div className='bg-repeat' style={{ backgroundImage: `url(${square_tile})`, backgroundSize: `24px` }}>
-                    <div className='h-[640px] w-full bg-primary-color px-view-h-padding py-nm flex justify-center items-center'>
-                        <div className='h-full w-full flex gap-4'>
-                            <div className='h-full w-full justify-center flex flex-col'>
-                                <img src={landing_page01}></img>
+            <div className='bg-repeat' style={{ backgroundImage: `url(${square_tile})`, backgroundSize: `24px` }}>
+                <div className='h-[655px] w-full bg-primary-color px-view-h-padding py-nm flex justify-center items-center'>
+                    <div className='h-full w-full flex gap-4'>
+                        <div className='h-full w-full justify-center flex flex-col'>
+                            <img src={landing_page01}></img>
+                        </div>
+                        <div className='h-full w-full justify-center flex flex-col gap-4'>
+                            <h1 className='text-white text-5xl font-bold'>Kamu Teenager? Tapi tak tahu arah?</h1>
+                            <p className='text-white text-lg text-opacity-70 font-normal'>Yuk ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita
+                                untuk masa depan yang kita impikan! </p>
+                            <div>
+                                <Button className="w-auto" variant="light">
+                                    Mulai
+                                    <ArrowRight />
+                                </Button>
                             </div>
                             <div className='h-full w-full justify-center flex flex-col gap-4'>
                                 <h1 className='text-white text-5xl font-bold'>Ayo, gali pengetahuanmu bersama TeenHealth sekarang!</h1>
