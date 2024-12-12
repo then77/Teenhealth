@@ -4,23 +4,18 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
 
 import image_learn from "@/assets/illustrations/learnImg.png";
-import ill_rightside from "@/assets/illustrations/Saly_18 3.png";
-import ill_2 from "@/assets/illustrations/Saly_22 3.png";
-import ill_3 from "@/assets/illustrations/Saly_22 6.png";
-import ill_4 from "@/assets/illustrations/Saly_22 5.png";
 import square_tile from "@/assets/illustrations/square.png";
-
-import { url } from 'inspector/promises';
+import Footer from '@/components/footer';
 
 export default function Learn() {
     return (
         <Page title="Learn">
             <div className='bg-repeat' style={{ backgroundImage: `url(${square_tile})`, backgroundSize: `24px` }}>
-                <div className='h-min w-full px-view-h-padding py-nm flex justify-center items-center border-t-[4px]'>
+                <div className='h-min w-full px-view-h-padding py-nm flex justify-center items-center'>
                     <div className='h-min w-full justify-center py-[30px]'>
                         <div className='w-full h-full backdrop-blur-md items-center bg-white/30 border-2 border-black/10 rounded-lg px-[30px] py-[30px] flex flex-col gap-4'>
-                            <h1 className='text-primary-color text-5xl font-bold'>Ayo, kita Belajar bersama</h1>
-                            <p className='text-black text-lg text-opacity-70 font-normal'>Yuk ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita untuk masa depan yang kita impikan!</p>
+                            <h1 className='text-primary-color text-4xl font-bold'>Ayo, kita Belajar bersama</h1>
+                            <p className='text-black text-opacity-70 font-normal'>Yuk ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita untuk masa depan yang kita impikan!</p>
                         </div>
                         <div className='flex justify-center px-[30px] py-[30px]'>
                             <div className='w-full max-w-4xl bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden'>
@@ -65,11 +60,7 @@ export default function Learn() {
                     </div>
                 </div>
             </div>
-
-            <div className='px-[30px] py-[30px] border-t-[2px] flex justify-center items-center'>
-                <p className='text-black text-lg text-opacity-70 font-normal'>2024 Made by </p>
-                <p className='text-primary-color text-lg text-opacity-70 font-normal'> Impact Team</p>
-            </div>
+            <Footer />
         </Page>
     );
 }
