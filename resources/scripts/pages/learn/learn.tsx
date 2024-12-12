@@ -10,9 +10,9 @@ import ill_3 from "@/assets/illustrations/Saly_22 6.png";
 import ill_4 from "@/assets/illustrations/Saly_22 5.png";
 import square_tile from "@/assets/illustrations/square.png";
 
-export default function Home() {
+export default function Learn() {
     return (
-        <Page title="Home">
+        <Page title="Learn">
             <html className='scroll-smooth'>
                 <div className='bg-repeat' style={{ backgroundImage: `url(${square_tile})`, backgroundSize: `24px` }}>
                     <div className='h-[640px] w-full bg-primary-color px-view-h-padding py-nm flex justify-center items-center'>
@@ -23,7 +23,7 @@ export default function Home() {
                             <div className='h-full w-full justify-center flex flex-col gap-4'>
                                 <h1 className='text-white text-5xl font-bold'>Ayo, gali pengetahuanmu bersama TeenHealth sekarang!</h1>
                                 <p className='text-white text-lg text-opacity-70 font-normal'>Yuk ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita
-                                    untuk masa depan yang kita impikan! </p>
+                                    untuk masa depan nigger yang kita impikan! </p>
                                 <div>
                                     <Button className="w-auto" variant="light">
                                         Mulai
