@@ -3,7 +3,7 @@ import Page from '@/components/page-component';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
 
-import landing_page01 from "@/assets/illustrations/landing_Page.png";
+import landing_page01 from "@/assets/illustrations/landing_page.png";
 import ill_rightside from "@/assets/illustrations/Saly_18 3.png";
 import ill_2 from "@/assets/illustrations/Saly_22 3.png";
 import ill_3 from "@/assets/illustrations/Saly_22 6.png";
