@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class Th
+class ThService
 {
     /**
      * Load user data for the store

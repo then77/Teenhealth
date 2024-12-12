@@ -1,0 +1,66 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: 🎉 Deploy updates
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: 🚚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ⏬ Install laravel dependencies
+        uses: php-actions/composer@v6
+        with:
+          progress: yes
+
+      - name: 🔍 Check laravel dependencies installation
+        run: |
+          if [ -d "./vendor" ]; then
+            echo "✅ Laravel dependencies installed successfully."
+          else
+            echo "❌ Laravel dependencies installation failed. (No vendor directory found)"
+            exit 1
+          fi
+
+      - name: 💻 Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: ⏬ Install node dependencies
+        run: timeout 3m npm ci
+
+      - name: 🛠️ Build assets
+        run: timeout 3m npm run build
+
+      - name: 🔍 Check assets build
+        run: |
+          if [ -d "./public/build/assets" ]; then
+            echo "✅ Assets built successfully."
+          else
+            echo "❌ Assets build failed. (No build directory found)"
+            exit 1
+          fi
+
+      - name: 📂 Upload site to server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          timeout: 180000
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.env*
+            **/node_modules
+            **/.htaccess

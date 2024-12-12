@@ -3,12 +3,12 @@
 namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use App\Services\Th;
+use App\Services\ThService;
 
-class ThFacades extends Facade
+class ThFacade extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return Th::class;
+        return ThService::class;
     }
 }
