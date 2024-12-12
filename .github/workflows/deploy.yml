@@ -58,9 +58,11 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           timeout: 180000
+          log-level: minimal
           exclude: |
             **/.git*
             **/.git*/**
             **/.env*
-            **/node_modules
+            **/node_modules*
+            **/node_modules/**
             **/.htaccess
