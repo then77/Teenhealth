@@ -13,6 +13,7 @@ const AuthLayout = lazy(() => import('@/pages/layouts/auth'));
 const ResetPassword = lazy(() => import('@/pages/auth/reset-password'));
 
 import Home from "@/pages/base/home";
+import About from "@/pages/about/about";
 import Learn from "@/pages/learn/learn";
 import Navbar from "@/components/navbar";
 const Error404 = lazy(() => import('@/pages/misc/not-found'));
@@ -24,6 +25,7 @@ function Routable() {
 
                 <Route element={<MainLayout />}>
                     <Route index element={<Home />} />
+                    <Route path="about" element={<About />} />
                     <Route path='learn' element={<Learn />} />
                 </Route>
 

@@ -9,6 +9,7 @@ import ill_2 from "@/assets/illustrations/Saly_22 3.png";
 import ill_3 from "@/assets/illustrations/Saly_22 6.png";
 import ill_4 from "@/assets/illustrations/Saly_22 5.png";
 import square_tile from "@/assets/illustrations/square.png";
+
 import { url } from 'inspector/promises';
 
 export default function Learn() {
@@ -58,7 +59,6 @@ export default function Learn() {
 
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
