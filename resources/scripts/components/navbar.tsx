@@ -134,7 +134,7 @@ export default function Navbar({
                         <DropdownCustom user={user} links={links} navItems={navItems}>
                             <Avatar>
                                 <AvatarFallback>N</AvatarFallback>
-                                <AvatarImage src={user.profile_picture ?? defaultAvatar} />
+                                <AvatarImage src={user.profile_pic ?? defaultAvatar} />
                             </Avatar>
                         </DropdownCustom>
                     ) : (

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\UserCourse;
 use Illuminate\Support\Facades\Auth;
 
 class ThService
@@ -16,8 +17,7 @@ class ThService
     {
 
         $final = [
-            'user' => self::partialUserData(),
-            'joined_courses' => self::joinedCourses()
+            'user' => self::partialUserData()
         ];
         return base64_encode(json_encode($final));
     }
@@ -37,34 +37,35 @@ class ThService
         ];
 
         // Only add is_admin to array if true
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             $data['is_admin'] = true;
         }
 
         return $data;
     }
 
-    public static function joinedCourses(): ?array {
+    public static function userData(): ?array
+    {
         $user = Auth::user();
 
         if (!$user) {
             return null;
         }
 
-        $enrolledCourses = $user->courseEnrollments()->with('course')->get();
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'profile_pic' => $user->profile_pic,
+            'email_verified_at' => $user->email_verified_at,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at
+        ];
 
-        $courses = [];
-        foreach ($enrolledCourses as $enrolledCourse) {
-            $course = $enrolledCourse->course;
-            $courses[] = [
-                'id' => $course->id,
-                'name' => $course->name,
-                'description' => $course->description,
-                'banner_url' => $course->banner_url,
-                'theme_color' => $course->theme_color,
-            ];
+        // Only add is_admin to array if true
+        if ($user->isAdmin()) {
+            $data['is_admin'] = true;
         }
 
-        return $courses;
+        return $data;
     }
 }

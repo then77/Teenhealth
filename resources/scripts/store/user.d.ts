@@ -5,10 +5,10 @@ export interface BaseUser {
     created_at?: Date;
     updated_at?: Date;
     email_verified_at?: Date;
-    profile_picture?: string;
+    profile_pic?: string;
     is_admin?: boolean;
 }
 
 export interface User extends BaseUser {
-    
+
 }
