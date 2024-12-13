@@ -14,14 +14,14 @@ import Footer from '@/components/footer';
 export default function Home() {
 
     const randomTitle = [
-        "Kamu Teenager? Tapi tak tahu arah?",
-        "Ayo, gali pengetahuanmu bersama TeenHealth sekarang!"
+        "Kamu Teenager? Tapi butuh arahan?",
+        "Gali pengetahuanmu bersama TeenHealth sekarang!"
     ];
 
     return (
         <Page title="Home">
             <div className='bg-repeat' style={{ backgroundImage: `url(${square_tile})`, backgroundSize: `24px` }}>
-                <div className='h-screen w-full bg-primary-color px-view-h-padding py-nm flex flex-col justify-center items-center'>
+                <div className='h-screen w-full bg-primary-image px-view-h-padding py-nm flex flex-col justify-center items-center'>
                     <div className='h-full w-full flex gap-4'>
                         <div className='h-full w-full justify-center flex flex-col'>
                             <img src={landing_page01}></img>

@@ -37,6 +37,9 @@ export default {
             colors: {
                 'primary-color': '#2892D7',
             },
+            'backgroundImage': {
+                'primary-image': 'radial-gradient(50.00% 50.00% at 50.00% 0.00%, #7EC7FA 0%, #2B9BEB 90%)',
+            },
             boxShadow: {
                 xs: '0 0 3px 0 rgb(0 0 0 / 0.05)'
             },

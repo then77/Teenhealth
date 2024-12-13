@@ -7,10 +7,15 @@ import type { User } from './user';
 
 export interface Store {
     user: User | null;
+    quiz_session: null | {
+        id: number;
+        course_name: string;
+    };
 }
 
 const initialState: Store = {
-    user: null
+    user: null,
+    quiz_session: null
 };
 
 export const typedHooks = createTypedHooks<Store>();

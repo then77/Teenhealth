@@ -16,6 +16,11 @@ class CourseContent extends Model
         'json_content'
     ];
 
+    protected $casts = [
+        'order' => 'integer',
+        'json_content' => 'json'
+    ];
+
     // Relationship to course
     public function course(): BelongsTo
     {
@@ -37,7 +42,7 @@ class CourseContent extends Model
                 'id' => $content->id,
                 'order' => $content->order,
                 'title' => $content->title,
-                'json_content' => json_decode($content->json_content)
+                'json_content' => $content->json_content,
             ];
         }
 

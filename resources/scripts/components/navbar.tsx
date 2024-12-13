@@ -68,22 +68,23 @@ export default function Navbar({
     const [show, setShow] = useState(false);
 
     // Update selected bar position
-    useEffect(() => {
-
-        // Get selected link item ref
+    const updateBar = () => {
         const ref = refs[location.pathname];
-
         if (ref && ref.current) {
             setLeftPos(ref.current.offsetLeft);
             setWidth(ref.current.offsetWidth);
-
-            // Set timeout to allow pos and width updated
-            // correctly before showing the selected bar
             setTimeout(() => setShow(true), 20);
-
         } else setShow(false);
+    }
+    useEffect(updateBar, [location.pathname]);
 
-    }, [location.pathname]);
+    // Bruteforce update selected bar position on first load
+    // Due to some bug with position
+    useEffect(() => {
+        const interval = setInterval(updateBar, 100);
+        setTimeout(() => clearInterval(interval), 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <>

@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import './assets/css/app.css';
+// Load radix-ui css somehow not built
+import './assets/css/radix.css';
 
 import Routable from '@/route';
 

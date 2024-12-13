@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Objects\ApiResponse;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -17,7 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-
+        // Add gate for user admin
+        Gate::define('admin', function (User $user) {
+            return $user->isAdmin();
+        });
     }
 
     /**

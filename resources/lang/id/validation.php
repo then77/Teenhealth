@@ -205,6 +205,7 @@ return [
         'course' => 'Materi',
         'content' => 'Konten',
         'quiz' => 'Quiz',
+        'session' => 'Quiz Session',
         'progress' => 'Progress',
         'answer' => 'Jawaban',
         'file' => 'File',

@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\QuizSession;
 use App\Models\User;
 use App\Models\UserCourse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class ThService
@@ -16,8 +18,13 @@ class ThService
     public static function loadStore(): ?string
     {
 
+        $quiz_session = self::quizSession();
         $final = [
-            'user' => self::partialUserData()
+            'user' => self::partialUserData(),
+            'quiz_session' => $quiz_session ? [
+                'id' => $quiz_session->id,
+                'course_name' => $quiz_session->quiz->course->name,
+            ] : null,
         ];
         return base64_encode(json_encode($final));
     }
@@ -67,5 +74,13 @@ class ThService
         }
 
         return $data;
+    }
+
+    public static function quizSession(): mixed
+    {
+        return QuizSession::where('user_id', Auth::id())
+            ->where('completed', false)
+            ->orderBy('updated_at', 'desc')
+            ->first();
     }
 }

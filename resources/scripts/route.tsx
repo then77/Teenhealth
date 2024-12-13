@@ -9,6 +9,7 @@ import ProgressBar from '@/components/progress-bar';
 
 import MainLayout from '@/pages/layouts/main';
 const AuthLayout = lazy(() => import('@/pages/layouts/auth'));
+const DashLayout = lazy(() => import('@/pages/layouts/dash'));
 
 const ResetPassword = lazy(() => import('@/pages/auth/reset-password'));
 
@@ -37,6 +38,10 @@ function Routable() {
                     <Route path="login" />
                     <Route path="register" />
                     <Route path="forgot-password" />
+                </Route>
+
+                <Route element={<DashLayout />}>
+                    <Route path="dashboard" element={<Error404/>} />
                 </Route>
 
                 <Route path="forgot-password/r/:token" element={<ResetPassword />} />

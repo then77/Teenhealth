@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import React, { useEffect } from 'react';
 
 export default function Page(
