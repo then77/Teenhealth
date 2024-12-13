@@ -85,7 +85,9 @@ export default function Navbar({
 
     }, [location.pathname]);
 
-    return (
+    return location.pathname.startsWith('/dashboard')
+      ? null
+      : (
         <>
             <div className={cn(
                 "fixed top-0 left-0 w-screen h-full max-h-18",
