@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest', 'throttle:auth'])->group(function () {
 
-    Route::post('/login', [Auth\LoginController::class, 'login']);
+    Route::post('/login', [Auth\LoginController::class, 'login'])->name('login');
     Route::post('/register', [Auth\RegisterController::class, 'register']);
     Route::post('/forgot-password', [Auth\ForgotController::class, 'send']);
     Route::post('/forgot-password/r/{token}', [Auth\ForgotController::class, 'reset'])

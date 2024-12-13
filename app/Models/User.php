@@ -53,6 +53,12 @@ class User extends Authenticatable
         ];
     }
 
+    // Check if user is admin
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
     // Relationship to get all user course enrollments
     public function courseEnrollments(): HasMany
     {

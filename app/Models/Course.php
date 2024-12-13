@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
@@ -34,5 +35,43 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'users_courses')
             ->withPivot(['progress_id', 'progress_percent', 'completed'])
             ->withTimestamps();
+    }
+
+    // Relationship to get all course contents
+    public function contents(): HasMany
+    {
+        return $this->hasMany(CourseContent::class);
+    }
+
+    // Relationship to quiz
+    public function quiz(): HasMany
+    {
+        return $this->hasMany(CourseQuiz::class);
+    }
+
+    // Helper function for automatic filter for user and admin
+    public static function autoFilter($courses = null): array
+    {
+        $new_courses = [];
+
+        if ($courses == null) {
+            $courses = Course::all()
+                ->sortBy('order');
+        }
+
+        foreach ($courses as $course) {
+            if (Auth::user()->isAdmin()) {
+                $new_courses[] = $course;
+            } else if ($course->enabled) {
+                $new_courses[] = [
+                    'id' => $course->id,
+                    'name' => $course->name,
+                    'description' => $course->description,
+                    'banner_url' => $course->banner_url,
+                    'theme_color' => $course->theme_color,
+                ];
+            }
+        }
+        return $new_courses;
     }
 }

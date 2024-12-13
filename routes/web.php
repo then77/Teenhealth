@@ -11,3 +11,4 @@ Route::get('/{react}', [Base\IndexController::class, 'index'])
     ->where('react', '^(?!(\/?)(api\/.*|admin(\/.*)?|login|register|forgot-password(\/r\/.*)?)).+');
 
 require __DIR__.'/auth.php';
+require __DIR__.'/apis/index.php';

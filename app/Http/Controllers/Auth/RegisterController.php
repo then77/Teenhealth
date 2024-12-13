@@ -41,7 +41,7 @@ class RegisterController extends Controller
         if ($user) {
             sleep(1);
             return ApiResponse::error(
-                400, __('validation.new.error', ['attribute' => 'register']),
+                409, __('validation.new.error', ['attribute' => 'register']),
                 ['email' => [__('validation.unique', ['attribute' => 'email'])]]);
         }
 

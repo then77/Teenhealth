@@ -181,8 +181,10 @@ return [
     ],
 
     'course' => [
-        'exists' => 'Kamu sudah terdaftar di materi :name.',
-        'completed' => 'Kamu sudah menyelesaikan materi :name.',
+        'exists' => 'Kamu sudah terdaftar di materi ini.',
+        'not_exists' => 'Kamu belum terdaftar di materi ini.',
+        'completed' => 'Kamu sudah menyelesaikan materi ini.',
+        'progress' => 'Kamu harus menyelesaikan materi sebelumnya.',
     ],
 
     /*
@@ -203,6 +205,7 @@ return [
         'course' => 'Materi',
         'content' => 'Konten',
         'quiz' => 'Quiz',
+        'progress' => 'Progress',
         'answer' => 'Jawaban',
         'file' => 'File',
         'picture' => 'Gambar',
