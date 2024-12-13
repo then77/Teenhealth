@@ -15,6 +15,7 @@ const ResetPassword = lazy(() => import('@/pages/auth/reset-password'));
 import Home from "@/pages/base/home";
 import About from "@/pages/base/about";
 import Learn from "@/pages/base/learn";
+import Quiz from "@/pages/base/quiz";
 import Navbar from "@/components/navbar";
 const Error404 = lazy(() => import('@/pages/misc/not-found'));
 
@@ -23,12 +24,14 @@ function Routable() {
         <BrowserRouter>
             <Routes>
 
-                
+
                 <Route index element={<Home />} />
                 <Route element={<MainLayout />}>
                     <Route path="about" element={<About />} />
                     <Route path='learn' element={<Learn />} />
                 </Route>
+
+                <Route path='quiz' element={<Quiz />} />
 
                 <Route element={<AuthLayout />}>
                     <Route path="login" />
@@ -54,6 +57,10 @@ function Routable() {
                 {
                     href: "/about",
                     link: "About",
+                },
+                {
+                    href: "/quiz",
+                    link: "Quiz",
                 },
                 {
                     href: "https://techcomfest.ukmpcc.org/",
