@@ -19,6 +19,15 @@ export default {
                 '1.25': '0.325rem',
                 '18': '4.5rem',
             },
+            backgroundImage: {
+                'yellow-gradient':'linear-gradient(90deg, rgba(234,198,68,0.1) 0%, rgba(248,218,67,0.1) 50%, rgba(255,227,90,0.1) 100%)',
+                'red-gradient':'linear-gradient(90deg, rgba(213,43,43,0.1) 0%, rgba(255,66,66,0.1) 50%, rgba(255,104,104,0.1) 100%)',
+                'green-radient':'linear-gradient(90deg, rgba(50,220,95,0.1) 0%, rgba(86,231,124,0.1) 50%, rgba(124,244,155,0.1) 100%)',
+                'blue-radial':'var(--Main, radial-gradient(100% 100% at 50% 0%, #7EC7FA 0%, #2B9BEB 70%))',
+            },
+            background: {
+                'blue-radial':'var(--Main, radial-gradient(100% 100% at 50% 0%, #7EC7FA 0%, #2B9BEB 70%))'
+            },
             maxHeight: {
                 '18': '4.5rem',
             },
