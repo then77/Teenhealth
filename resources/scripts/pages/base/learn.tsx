@@ -44,8 +44,8 @@ export default function Learn() {
                                         <img src={image_learn} alt="Learn" className='w-full h-full object-cover' />
                                     </div>
                                     <div className='md:w-1/2 p-6 flex flex-col '>
-                                    <h2 className='text-primary-color text-2xl font-bold'>Future Planning</h2>
-                                    <p className='text-black text-opacity-70 font-normal mt-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+                                        <h2 className='text-primary-color text-2xl font-bold'>Future Planning</h2>
+                                        <p className='text-black text-opacity-70 font-normal mt-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
                                         <div className='mt-6'>
                                             <Button className="w-auto" variant="light">
                                                 Mulai

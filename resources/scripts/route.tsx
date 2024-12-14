@@ -17,7 +17,8 @@ import About from "@/pages/base/about";
 import Learn from "@/pages/base/learn";
 import Quiz from "@/pages/base/quiz";
 import Navbar from "@/components/navbar";
-import Dashboard from './pages/base/dashboard';
+import Materi from './pages/base/dashboard/materi';
+import Content from './pages/base/content';
 const Error404 = lazy(() => import('@/pages/misc/not-found'));
 
 function Routable() {
@@ -30,7 +31,8 @@ function Routable() {
                 <Route element={<MainLayout />}>
                     <Route path="about" element={<About />} />
                     <Route path='learn' element={<Learn />} />
-                    <Route path='dashboard' element={<Dashboard children />} />
+                    <Route path='dashboard/materi' element={<Materi/>} />
+                    <Route path='dashboard/materi/content' element={<Content/>} />
                 </Route>
 
                 <Route path='quiz' element={<Quiz />} />

@@ -15,7 +15,8 @@ const buttonVariants = cva(
           "bg-red-500 text-zinc-50 shadow-sm hover:bg-red-500/90",
         outline:
           "border border-zinc-200 bg-white shadow-sm hover:bg-zinc-100 hover:text-zinc-900",
-        light: "bg-white text-primary-color hover:bg-zinc-100",
+        light: "bg-white text-primary-color hover:bg-zinc-100 border border-black/10",
+        icon: "size-10 transition-colors ease-in-out duration-300 hover:bg-black/5 rounded-full flex justify-center items-center",
         secondary:
           "bg-zinc-100 text-zinc-900 shadow-sm hover:bg-zinc-100/80",
         ghost: "hover:bg-zinc-100 hover:text-zinc-900",
