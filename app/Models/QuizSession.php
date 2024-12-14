@@ -35,7 +35,7 @@ class QuizSession extends Model
 
         if ($quiz_sessions == null) {
             $quiz_sessions = QuizSession::all()
-                ->sortBy('updated_at');
+                ->orderBy('updated_at', 'desc');
         }
 
         foreach ($quiz_sessions as $quiz_session) {
@@ -45,14 +45,14 @@ class QuizSession extends Model
                 $new_quiz_sessions[] = [
                     'id' => $quiz_session->id,
                     'completed' => $quiz_session->completed,
-                    'answers' => $quiz_session->answers,
                     'quiz' => CourseQuiz::autoFilter([$quiz_session->quiz])[0],
+                    'result' => $quiz_session->result,
                 ];
             } else {
                 $new_quiz_sessions[] = [
                     'id' => $quiz_session->id,
                     'completed' => $quiz_session->completed,
-                    'answers' => $quiz_session->answers,
+                    'result' => $quiz_session->result,
                 ];
             }
         }

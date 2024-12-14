@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Objects\ApiResponse;
 use App\Models\UserCourse;
+use App\Services\ThService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -84,7 +85,7 @@ class UserCourseController extends Controller
 
         // Get the first course content
         $course_content = $course->contents()
-            ->orderBy('order')
+            ->orderBy('order', 'asc')
             ->first();
 
         if ($course_content == null) {
@@ -124,57 +125,21 @@ class UserCourseController extends Controller
             );
         }
 
-        // Get the user course
-        $user = $request->user();
-        $user_course = $user->courseEnrollments()
-            ->where('course_id', $id)
-            ->first();
+        $response = ThService::getCourseProgress(
+            $id, $request->integer('progress')
+        );
 
-        if ($user_course == null) {
-            return ApiResponse::error(
-                404, __('validation.course.not_exists')
-            );
+        // Check if response is JSONResponse
+        if (is_a($response, 'Illuminate\Http\JsonResponse')) {
+            return $response;
         }
 
-        // Check if course is already completed
-        if ($user_course->completed) {
-            return ApiResponse::error(
-                409, __('validation.course.completed')
-            );
-        }
-
-        // Get current course
-        $progress_id = $request->integer('progress');
-        $current_content = $user_course->course->contents()
-            ->where('id', $progress_id)
-            ->first();
-
-        if ($current_content == null) {
-            return ApiResponse::error(
-                404, __('validation.new.un', [
-                    'attribute' => __('validation.attributes.content')
-                ])
-            );
-        }
-
-        // Check if current_content id is same as user_course progress_id
-        if ($current_content->id != $user_course->progress_id) {
-            return ApiResponse::error(
-                409, __('validation.course.progress')
-            );
-        }
-
-        // Get all course contents size
-        $total_contents = $user_course->course->contents()
-            ->count();
-
-        // Check if this course has quiz
-        $quiz = $user_course->course->quiz()
-            ->first();
-
-        // Get progress percent with added 1 for quiz, and round it
-        $progress_percent = round(($current_content->order / ($total_contents+(
-            $quiz != null && $quiz->enabled ? 1 : 0)))*100);
+        // Destructure response
+        $user_course = $response['user_course'];
+        $current_content = $response['current_content'];
+        $total_contents = $response['total_contents'];
+        $quiz = $response['quiz'];
+        $progress_percent = $response['progress_percent'];
 
         // Determine response
         $response = [

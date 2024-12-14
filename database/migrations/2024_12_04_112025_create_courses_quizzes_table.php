@@ -28,12 +28,13 @@ return new class extends Migration
             // Quiz type. No function to client currently.
             $table->unsignedTinyInteger('type');
 
+            $table->unsignedSmallInteger('order');
+
             // Max question to be shown to user.
             // Useful to limit questions when quiz is randomized.
-            $table->unsignedTinyInteger('max_required_answer');
-
-            // Minimum correct answer to be determined as passed.
-            $table->unsignedTinyInteger('min_pass_answer');
+            // Not used if not randomized
+            $table->unsignedTinyInteger('max_required_answer')
+                ->nullable();
 
             // Set this quiz questions to be randomized.
             $table->boolean('randomize')->default(false);
@@ -44,6 +45,10 @@ return new class extends Migration
             // 2 - Show every question next
             $table->unsignedTinyInteger('show_answer')
                 ->default(0);
+
+            // New: result to show based on points
+            $table->json('result')
+                ->nullable();
 
         });
     }

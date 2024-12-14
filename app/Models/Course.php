@@ -55,8 +55,7 @@ class Course extends Model
         $new_courses = [];
 
         if ($courses == null) {
-            $courses = Course::all()
-                ->sortBy('order');
+            $courses = Course::orderBy('order', 'asc')->get();
         }
 
         foreach ($courses as $course) {

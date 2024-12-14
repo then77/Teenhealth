@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\Objects\ApiResponse;
 use App\Models\QuizSession;
 use App\Models\User;
 use App\Models\UserCourse;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class ThService
@@ -82,5 +84,77 @@ class ThService
             ->where('completed', false)
             ->orderBy('updated_at', 'desc')
             ->first();
+    }
+
+    public static function getCourseProgress(
+        int $course_id, ?int $progress_id,
+        bool $fullcheck = true
+    ): JsonResponse|array
+    {
+        // Get the user course
+        $user = Auth::user();
+        $user_course = $user->courseEnrollments()
+            ->where('course_id', $course_id)
+            ->first();
+
+        if ($user_course == null) {
+            return ApiResponse::error(
+                404, __('validation.course.not_exists')
+            );
+        }
+
+        // Check if course is already completed
+        if ($user_course->completed) {
+            return ApiResponse::error(
+                409, __('validation.course.completed')
+            );
+        }
+
+        // Get current course
+        if ($progress_id == null) {
+            $progress_id = $user_course->progress_id;
+        }
+
+        $current_content = $user_course->course->contents()
+            ->where('id', $progress_id)
+            ->first();
+
+        if ($current_content == null) {
+            return ApiResponse::error(
+                404, __('validation.new.un', [
+                    'attribute' => __('validation.attributes.content')
+                ])
+            );
+        }
+
+        // Check if current_content id is same as user_course progress_id
+        if (
+            $fullcheck &&
+            $current_content->id != $user_course->progress_id
+        ) {
+            return ApiResponse::error(
+                409, __('validation.course.progress')
+            );
+        }
+
+        // Get all course contents size
+        $total_contents = $user_course->course->contents()
+            ->count();
+
+        // Check if this course has quiz
+        $quiz = $user_course->course->quiz()
+            ->first();
+
+        // Get progress percent with added 1 for quiz, and round it
+        $progress_percent = round(($current_content->order / ($total_contents+(
+            $fullcheck && $quiz != null && $quiz->enabled ? 1 : 0)))*100);
+
+        return [
+            'user_course' => $user_course,
+            'current_content' => $current_content,
+            'total_contents' => $total_contents,
+            'quiz' => $quiz,
+            'progress_percent' => $progress_percent,
+        ];
     }
 }

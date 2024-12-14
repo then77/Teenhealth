@@ -40,7 +40,7 @@ class UserCourse extends Model
         $new_user_courses = [];
 
         if ($user_courses == null) {
-            $user_courses = UserCourse::all()->sortBy('updated_at');
+            $user_courses = UserCourse::orderBy('updated_at', 'desc')->get();
         }
 
         foreach ($user_courses as $user_course) {

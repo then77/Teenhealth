@@ -34,7 +34,7 @@ class CourseContent extends Model
 
         if ($contents == null) {
             $contents = CourseContent::all()
-                ->sortBy('order');
+                ->orderBy('order', 'asc');
         }
 
         foreach ($contents as $content) {

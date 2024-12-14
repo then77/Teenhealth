@@ -24,6 +24,7 @@ class CourseQuiz extends Model
         'min_pass' => 'integer',
         'randomize' => 'boolean',
         'show_answer' => 'integer',
+        'result' => 'json',
     ];
 
     // Relationship to course
@@ -38,14 +39,19 @@ class CourseQuiz extends Model
         return $this->hasMany(QuizSession::class, 'quiz_id');
     }
 
+    // Relationship to questions
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class, 'quiz_id');
+    }
+
     // Helper function for automatic filter for user and admin
     public static function autoFilter($quizzes = null): array
     {
         $new_quizzes = [];
 
         if ($quizzes == null) {
-            $quizzes = CourseQuiz::all()
-                ->sortBy('order');
+            $quizzes = CourseQuiz::orderBy('order', 'asc')->get();
         }
 
         foreach ($quizzes as $quiz) {
@@ -55,7 +61,6 @@ class CourseQuiz extends Model
                 $new_quizzes[] = [
                     'id' => $quiz->id,
                     'type' => $quiz->type,
-                    'max_questions' => $quiz->max_questions,
                     'session' => $quiz->session ?? null,
                     'course' => Course::autoFilter([$quiz->course])[0],
                 ];

@@ -29,6 +29,14 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
+            // Set column question_id as an id to be foreign.
+            // use constrained() to automatically determine
+            // column based on "questions.id" and nullable.
+            $table->foreignId('question_id')
+                ->nullable()
+                ->constrained('questions')
+                ->onDelete('cascade');
+
             $table->boolean('completed')->default(false);
             $table->json('answers');
         });

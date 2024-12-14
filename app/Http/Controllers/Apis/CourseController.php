@@ -64,7 +64,7 @@ class CourseController extends Controller
         $contents = $user_course->course->contents;
         return ApiResponse::success(
             __('base.success_retrieve', ['object' => 'course contents']),
-            CourseContent::autoFilter($contents)
+            CourseContent::autoFilter($contents->sortBy('order'))
         );
     }
 }

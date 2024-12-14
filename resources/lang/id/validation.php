@@ -186,6 +186,10 @@ return [
         'completed' => 'Kamu sudah menyelesaikan materi ini.',
         'progress' => 'Kamu harus menyelesaikan materi sebelumnya.',
     ],
+    'session' => [
+        'exists' => 'Kamu sudah memiliki sesi untuk quiz ini.',
+        'completed' => 'Kamu sudah menyelesaikan sesi ini.',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -206,6 +210,7 @@ return [
         'content' => 'Konten',
         'quiz' => 'Quiz',
         'session' => 'Quiz Session',
+        'question' => 'Pertanyaan',
         'progress' => 'Progress',
         'answer' => 'Jawaban',
         'file' => 'File',
