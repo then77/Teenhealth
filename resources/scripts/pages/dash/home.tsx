@@ -11,6 +11,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Quiz } from "@/store/quiz";
 import { UserCourse } from "@/store/user-course";
@@ -50,8 +51,20 @@ export default function DashboardHome() {
                             </div>
                         )}
                         {courses?.length! > 0 && courses?.map((course, i) => (
-                            <Card className="p-4">
-                                <p>{course.course.name}</p>
+                            <Card className="p-0 flex items-center gap-4">
+                                <img src={course.course.banner_url} className="h-20 w-24 object-cover rounded-l-xl border-r border-zinc-200" />
+                                <div className="w-full flex flex-col justify-center gap-y-1">
+                                    <h2>{course.course.name}</h2>
+                                    <div className="flex gap-2 items-center">
+                                        <Progress value={course.progress_percent} />
+                                        <span>{Math.round(course.progress_percent)}%</span>
+                                    </div>
+                                </div>
+                                <div className="h-full p-4 flex justify-center items-center">
+                                    <Button asChild>
+                                        <Link to={`/materi/${course.course.id}`}>Lanjut <ArrowRight /></Link>
+                                    </Button>
+                                </div>
                             </Card>
                         ))}
                     </CardContent>
