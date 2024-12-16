@@ -28,7 +28,7 @@ export default function Home() {
                         </div>
                         <div className='h-full w-full justify-center flex flex-col gap-4'>
                             <h1 className='text-white text-5xl font-bold'>
-                                {randomTitle[Math.floor(Math.random()*2)]}
+                                {randomTitle[Math.floor(Math.random() * 2)]}
                             </h1>
                             <p className='text-white text-lg text-opacity-70 font-normal'>Yuk ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita
                                 untuk masa depan yang kita impikan! </p>
@@ -76,15 +76,9 @@ export default function Home() {
                             <img src={ill_3} className='absolute size-24 rotate-[54deg] -ml-[-480px]'></img>
                             <img src={ill_4} className='absolute size-64 rotate-[-15deg] -ml-[-340px] -mt-[-230px]'></img>
                             <div className='w-full h-full backdrop-blur-md bg-white/30 border-2 border-black/10 rounded-lg px-[30px] py-[30px] flex flex-col gap-4'>
-                                <h1 className='text-primary-color text-5xl font-bold'>Lorem ipsum doret si amet</h1>
-                                <p className='text-black text-lg text-opacity-70 font-normal'>Yuk ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita
-                                    untuk masa depan yang kita impikan! </p>
-                                <div>
-                                    <Button className="w-auto" variant="light">
-                                        Mulai
-                                        <ArrowRight />
-                                    </Button>
-                                </div>
+                                <h1 className='text-primary-color text-5xl font-bold'>Hai! Selamat datang di TeenHealth!</h1>
+                                <p className='text-black text-lg text-opacity-70 font-normal'>Kamu pasti setuju, jadi remaja itu masa-masa yang seru banget, tapi kadang juga bikin bingung. Banyak hal baru yang mesti dipelajari, mulai dari ngerti diri sendiri, hubungan sama orang lain, sampai ngerencanain masa depan. Nah, di sinilah TeenHealth hadir buat nemenin kamu!
+                                TeenHealth adalah platform yang didesain khusus untuk kamu, remaja keren yang lagi mencari jawaban atas berbagai pertanyaan seputar kesehatan, pergaulan, mental, dan kehidupan. Kita percaya kalau jadi remaja itu nggak cuma soal tumbuh, tapi juga soal berkembang—jadi versi terbaik dari dirimu. </p>
                             </div>
                         </div>
                     </div>
@@ -92,8 +86,8 @@ export default function Home() {
                 <div className='h-[640px] w-full px-view-h-padding py-nm flex justify-center items-center border-t-[4px]'>
                     <div className='h-min w-full justify-center py-[30px]'>
                         <div className='w-full h-full backdrop-blur-md items-center bg-white/30 border-2 border-black/10 rounded-lg px-[30px] py-[30px] flex flex-col gap-4'>
-                            <h1 className='text-primary-color text-5xl font-bold'>Lorem ipsum doret si amet</h1>
-                            <p className='text-black text-lg text-opacity-70 font-normal'>Yuk ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita
+                            <h1 className='text-primary-color text-5xl font-bold'>Yuk, eksplor lebih jauh</h1>
+                            <p className='text-black text-lg text-opacity-70 font-normal'>Ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita
                                 untuk masa depan yang kita impikan! </p>
                             <div>
                                 <Button className="w-auto" variant="light">
