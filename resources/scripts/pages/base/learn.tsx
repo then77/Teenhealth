@@ -6,8 +6,19 @@ import { ArrowRight } from 'lucide-react';
 import image_learn from "@/assets/illustrations/learnImg.png";
 import square_tile from "@/assets/illustrations/square.png";
 import Footer from '@/components/footer';
+import { useStoreState } from '@/store';
+import { Navigate } from 'react-router';
 
 export default function Learn() {
+
+     // Store hooks
+     const user = useStoreState((state) => state.user);
+
+     // Redirect to login if user is not logged in
+     if (user) {
+        return <Navigate to="/dashboard/materi" />;
+     }
+
     return (
         <Page title="Learn">
             <div className='bg-repeat' style={{ backgroundImage: `url(${square_tile})`, backgroundSize: `24px` }}>
