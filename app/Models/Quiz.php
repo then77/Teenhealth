@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
-class CourseQuiz extends Model
+class Quiz extends Model
 {
-    protected $table = 'courses_quizzes';
+    protected $table = 'quizzes';
 
     protected $fillable = [
         'course_id',
@@ -51,7 +51,7 @@ class CourseQuiz extends Model
         $new_quizzes = [];
 
         if ($quizzes == null) {
-            $quizzes = CourseQuiz::orderBy('order', 'asc')->get();
+            $quizzes = Quiz::orderBy('order', 'asc')->get();
         }
 
         foreach ($quizzes as $quiz) {
@@ -61,8 +61,9 @@ class CourseQuiz extends Model
                 $new_quizzes[] = [
                     'id' => $quiz->id,
                     'type' => $quiz->type,
-                    'session' => $quiz->session ?? null,
-                    'course' => Course::autoFilter([$quiz->course])[0],
+                    'name' => $quiz->name,
+                    'description' => $quiz->description,
+                    'session' => $quiz->session ?? null
                 ];
             }
         }

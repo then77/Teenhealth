@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Apis;
 
 use App\Http\Controllers\Controller;
-use App\Models\CourseQuiz;
+use App\Models\Quiz;
 use App\Models\Objects\ApiResponse;
 use App\Models\Question;
 use App\Models\QuizSession;
@@ -42,7 +42,7 @@ class QuizSessionController extends Controller
 
             $question = $response;
         } else {
-            $question = CourseQuiz::find($quiz_session->quiz_id)
+            $question = Quiz::find($quiz_session->quiz_id)
                 ->questions()
                 ->where('id', $question_id)
                 ->first();
@@ -55,13 +55,19 @@ class QuizSessionController extends Controller
             );
         }
 
+        $quiz = Quiz::find($quiz_session->quiz_id);
+        $max_questions = $quiz->max_required_answer;
+        $action = (count($quiz_session->answers) >= $max_questions - 1) ?
+            'next_then_complete' : 'next';
+
         return ApiResponse::success(
             __('base.success_retrieve', [
                 'object' => __('validation.attributes.question')
             ]),
             [
                 'question' => Question::autoFilter([$question])[0],
-                'session' => QuizSession::autoFilter([$quiz_session])[0]
+                'session' => QuizSession::autoFilter([$quiz_session])[0],
+                'action' => $action
             ]
         );
     }
@@ -73,7 +79,7 @@ class QuizSessionController extends Controller
         try {
             $request->validate([
                 'question' => ['required', 'integer'],
-                'answer' => ['required', 'integer']
+                'answer' => ['required']
             ]);
         } catch (ValidationException $error) {
             return ApiResponse::error(
@@ -100,7 +106,7 @@ class QuizSessionController extends Controller
 
         // Check if question_id is valid
         $question_id = $request->integer('question');
-        $question = CourseQuiz::find($quiz_session->quiz_id)
+        $question = Quiz::find($quiz_session->quiz_id)
             ->questions()
             ->where('id', $question_id)
             ->first();
@@ -110,6 +116,29 @@ class QuizSessionController extends Controller
                 404, __('validation.new.un',
                     ['attribute' => __('validation.attributes.question')])
             );
+        }
+
+        // Check if question_id is same as session current question_id
+        if ($question_id != $quiz_session->question_id) {
+            return ApiResponse::error(
+                409, __('validation.session.question_invalid')
+            );
+        }
+
+        // Get quiz type and make sure answer is valid
+        $quiz = Quiz::find($quiz_session->quiz_id);
+        if ($quiz->type === 1) {
+            try {
+                $request->validate(
+                    ['answer' => ['required', 'integer', 'min:1', 'max:4']]
+                );
+            } catch (ValidationException $error) {
+                return ApiResponse::error(
+                    422, __('validation.new.error',
+                    ['attribute' => 'answer']),
+                    $error->errors()
+                );
+            }
         }
 
         // Save answer option
@@ -123,7 +152,6 @@ class QuizSessionController extends Controller
         $action = null;
 
         // Check for max questions
-        $quiz = CourseQuiz::find($quiz_session->quiz_id);
         $max_questions = $quiz->max_required_answer;
 
         if (count($answers) >= $max_questions) {
@@ -167,7 +195,7 @@ class QuizSessionController extends Controller
     // Function to generate question for session
     private function generateQuestion(int $quiz_id, array $answers = []){
         // Get quiz from quiz_id
-        $quiz = CourseQuiz::find($quiz_id)
+        $quiz = Quiz::find($quiz_id)
             ->with('questions')
             ->first();
 

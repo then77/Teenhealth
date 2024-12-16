@@ -138,7 +138,6 @@ class UserCourseController extends Controller
         $user_course = $response['user_course'];
         $current_content = $response['current_content'];
         $total_contents = $response['total_contents'];
-        $quiz = $response['quiz'];
         $progress_percent = $response['progress_percent'];
 
         // Determine response
@@ -147,13 +146,7 @@ class UserCourseController extends Controller
         ];
 
         if ($current_content->order >= $total_contents) {
-
-            if ($quiz != null && $quiz->enabled) {
-                $response['action'] = 'quiz';
-            } else {
-                $response['action'] = 'completed';
-            }
-
+            $response['action'] = 'completed';
         } else {
             $next_content = $user_course->course->contents()
                 ->where('order', $current_content->order + 1)
@@ -167,11 +160,7 @@ class UserCourseController extends Controller
             $response['progress_id'] = $next_content->id;
 
             if ($current_content->order >= $total_contents-1) {
-                if ($quiz != null && $quiz->enabled) {
-                    $response['action'] = 'next_then_quiz';
-                } else {
-                    $response['action'] = 'next_then_complete';
-                }
+                $response['action'] = 'next_then_complete';
             } else {
                 $response['action'] = 'next';
             }

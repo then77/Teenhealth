@@ -30,7 +30,7 @@ export default function QuizDetect() {
                         <h1 className="text-3xl font-semibold text-sky-600 text-center">Quiz mu belum selesai!</h1>
                         <p className="text-center">
                             Klik "lanjutkan" untuk langsung pergi ke quiz mu:
-                            <br />{quiz.course_name}
+                            <br />{quiz.name}
                         </p>
                     </AlertDialogHeader>
                     <AlertDialogFooter className="p-4">

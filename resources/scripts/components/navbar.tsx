@@ -86,6 +86,13 @@ export default function Navbar({
         return () => clearInterval(interval);
     }, []);
 
+    // function to use for determine dashboard mode or not
+    const checkDashboard = () => {
+        return /\/dashboard(\/materi|\/quiz)?/.test(location.pathname)
+            || /\/materi\/.+/.test(location.pathname)
+            || /\/quiz\/.+/.test(location.pathname);
+    }
+
     return (
         <>
             <div className={cn(
@@ -93,7 +100,7 @@ export default function Navbar({
                 "px-12 md:px-16 lg:px-24 py-4",
                 "bg-white shadow-xs border-b border-zinc-200",
                 "justify-between items-center gap-20 inline-flex",
-                className
+                checkDashboard() && "hidden", className
             )}>
                 <div className="flex justify-start items-center gap-20">
                     <div className="justify-start items-center gap-5 md:gap-6 flex">
@@ -134,7 +141,7 @@ export default function Navbar({
                     {user ? (
                         <DropdownCustom user={user} links={links} navItems={navItems}>
                             <Avatar>
-                                <AvatarFallback>N</AvatarFallback>
+                                <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
                                 <AvatarImage src={user.profile_pic ?? defaultAvatar} />
                             </Avatar>
                         </DropdownCustom>
@@ -173,43 +180,49 @@ interface NavbarLinkItemProps extends NavbarLinkItemBaseProps {
     children?: React.ReactNode;
 };
 
-function DropdownCustom({
-    user, links, navItems, children
+export function DropdownCustom({
+    user, links, navItems, noMargin, children
 }: {
     user: User | null,
-    links: NavbarLinks[],
-    navItems: NavbarLinkItemBaseProps | undefined,
+    links?: NavbarLinks[],
+    navItems?: NavbarLinkItemBaseProps | undefined,
     children: React.ReactNode
+    noMargin?: boolean
 }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
                 {children}
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[90vw] mx-[5vw] sm:w-64 sm:mr-8 lg:mr-16 mt-2 p-4 py-4 sm:p-2 sm:py-3">
-                <div className="flex flex-col px-1 gap-3 sm:gap-0 lg:hidden">
-                    {links.map((link) => {
-                        return (
-                            <DropdownMenuItem key={link.link} className="focus:bg-transparent p-0">
-                                <NavbarLinkItem
-                                    key={link.link}
-                                    {...link}
-                                    selected={link.href === location.pathname}
-                                    {...navItems}
-                                >
-                                    {link.link === "Home"
-                                        ? <House className="w-4 h-4" />
-                                        : link.link === "Learn"
-                                            ? <BookOpen className="w-4 h-4" />
-                                            : link.link === "About"
-                                                ? <Info className="w-4 h-4" />
-                                                : <SquareArrowOutUpRight className="w-4 h-4" />}
-                                </NavbarLinkItem>
-                            </DropdownMenuItem>
-                        )
-                    })}
-                    <DropdownMenuSeparator />
-                </div>
+            <DropdownMenuContent className={cn(
+                "w-[90vw] mx-[5vw] sm:w-64 sm:mr-8 mt-2 p-4 py-4 sm:p-2 sm:py-3",
+                !noMargin && "lg:mr-16"
+            )}>
+                {links && (
+                    <div className="flex flex-col px-1 gap-3 sm:gap-0 lg:hidden">
+                        {links.map((link) => {
+                            return (
+                                <DropdownMenuItem key={link.link} className="focus:bg-transparent p-0">
+                                    <NavbarLinkItem
+                                        key={link.link}
+                                        {...link}
+                                        selected={link.href === location.pathname}
+                                        {...navItems}
+                                    >
+                                        {link.link === "Home"
+                                            ? <House className="w-4 h-4" />
+                                            : link.link === "Learn"
+                                                ? <BookOpen className="w-4 h-4" />
+                                                : link.link === "About"
+                                                    ? <Info className="w-4 h-4" />
+                                                    : <SquareArrowOutUpRight className="w-4 h-4" />}
+                                    </NavbarLinkItem>
+                                </DropdownMenuItem>
+                            )
+                        })}
+                        <DropdownMenuSeparator />
+                    </div>
+                )}
                 {
                     user ? (
                         <>

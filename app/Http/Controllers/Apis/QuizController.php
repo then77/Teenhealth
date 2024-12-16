@@ -4,22 +4,20 @@ namespace App\Http\Controllers\Apis;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
-use App\Models\CourseQuiz;
-use App\Models\Objects\ApiResponse;
 use App\Models\Quiz;
+use App\Models\Objects\ApiResponse;
 use App\Models\QuizSession;
 use App\Services\ThService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use function Symfony\Component\Translation\t;
 
 class QuizController extends Controller
 {
     // Get all quizzes
     public function index(Request $request)
     {
-        $quizzes = CourseQuiz::orderBy('order', 'asc')->get();
+        $quizzes = Quiz::orderBy('order', 'asc')->get();
 
         // Combine by check for quiz sessions
         foreach ($quizzes as $quiz) {
@@ -35,7 +33,7 @@ class QuizController extends Controller
 
         return ApiResponse::success(
             __('base.success_retrieve', ['object' => 'quizzes']),
-            CourseQuiz::autoFilter($quizzes)
+            Quiz::autoFilter($quizzes)
         );
     }
 
@@ -85,34 +83,37 @@ class QuizController extends Controller
             );
         }
 
-        // Get response content
-        $response = ThService::getCourseProgress(
-            $request->integer('quiz'),
-            null, false
-        );
+//        // Get response content
+//        $response = ThService::getCourseProgress(
+//            $request->integer('quiz'),
+//            null, false
+//        );
 
-        // Check if response is JSONResponse
-        if (is_a($response, 'Illuminate\Http\JsonResponse')) {
-            return $response;
-        }
+//        // Check if response is JSONResponse
+//        if (is_a($response, 'Illuminate\Http\JsonResponse')) {
+//            return $response;
+//        }
 
-        // Destructure response
-        $user_course = $response['user_course'];
-        $current_content = $response['current_content'];
-        $total_contents = $response['total_contents'];
-        $quiz = $response['quiz'];
-        $progress_percent = $response['progress_percent'];
+//        // Destructure response
+//        $user_course = $response['user_course'];
+//        $current_content = $response['current_content'];
+//        $total_contents = $response['total_contents'];
+//        $quiz = $response['quiz'];
+//        $progress_percent = $response['progress_percent'];
 
-        if ($progress_percent < 100) {
-            return ApiResponse::error(
-                409, __('validation.course.progress'),
-                ['progress' => $progress_percent]
-            );
-        }
+//        if ($progress_percent < 100) {
+//            return ApiResponse::error(
+//                409, __('validation.course.progress'),
+//                ['progress' => $progress_percent]
+//            );
+//        }
 
-        // Get actual quiz id from course id
-        $quiz = CourseQuiz::where('course_id', $user_course->course_id)
-            ->first();
+//        // Get actual quiz id from course id
+//        $quiz = Quiz::where('course_id', $user_course->course_id)
+//            ->first();
+
+        // Get the quiz
+        $quiz = Quiz::find($request->quiz)->first();
 
         // Check if session_quiz with that quiz_id already exists
         $quiz_session = QuizSession::where('quiz_id', $quiz->id)
@@ -141,7 +142,7 @@ class QuizController extends Controller
 
     // Function to get result of answered quiz
     private function getResult(int $quiz_id) {
-        $quiz = CourseQuiz::find($quiz_id);
+        $quiz = Quiz::find($quiz_id);
         $quiz_session = QuizSession::where('quiz_id', $quiz_id)
             ->where('user_id', Auth::id())
             ->first();
@@ -171,8 +172,7 @@ class QuizController extends Controller
             $answer = $answers[$question->id];
 
             // get answer with answers from question
-            $result = $question->answer[$answer];
-            $correct = $result['poin'];
+            $correct = $question->answer[$answer-1];
         }
 
         // Categorize result from quiz result based on correct

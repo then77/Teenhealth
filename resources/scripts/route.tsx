@@ -12,12 +12,16 @@ const AuthLayout = lazy(() => import('@/pages/layouts/auth'));
 const DashLayout = lazy(() => import('@/pages/layouts/dash'));
 
 const ResetPassword = lazy(() => import('@/pages/auth/reset-password'));
+const DashboardHome = lazy(() => import('@/pages/dash/home'));
+const DashboardCourses = lazy(() => import('@/pages/dash/courses'));
 
 import Home from "@/pages/base/home";
 import About from "@/pages/base/about";
 import Learn from "@/pages/base/learn";
-import Quiz from "@/pages/base/quiz";
 import Navbar from "@/components/navbar";
+import DevOnly from "@/pages/base/dev-only";
+import DevOnly2 from "@/pages/base/dev-only-2";
+
 const Error404 = lazy(() => import('@/pages/misc/not-found'));
 
 function Routable() {
@@ -32,7 +36,8 @@ function Routable() {
                     <Route path='learn' element={<Learn />} />
                 </Route>
 
-                <Route path='quiz' element={<Quiz />} />
+                <Route path="dev-only" element={<DevOnly />} />
+                <Route path="dev-only-2" element={<DevOnly2 />} />
 
                 <Route element={<AuthLayout />}>
                     <Route path="login" />
@@ -41,7 +46,8 @@ function Routable() {
                 </Route>
 
                 <Route element={<DashLayout />}>
-                    <Route path="dashboard" element={<Error404/>} />
+                    <Route path='dashboard' element={<DashboardHome />} />
+                    <Route path='dashboard/materi' element={<DashboardCourses />} />
                 </Route>
 
                 <Route path="forgot-password/r/:token" element={<ResetPassword />} />
@@ -62,10 +68,6 @@ function Routable() {
                 {
                     href: "/about",
                     link: "About",
-                },
-                {
-                    href: "/quiz",
-                    link: "Quiz",
                 },
                 {
                     href: "https://techcomfest.ukmpcc.org/",

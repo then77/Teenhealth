@@ -17,9 +17,9 @@ return new class extends Migration
 
             // Set column quiz_id as an id to be foreign.
             // use constrained() to determine
-            // column based on "courses_quizzes.id".
+            // column based on "quizzes.id".
             $table->foreignId('quiz_id')
-                ->constrained('courses_quizzes')
+                ->constrained('quizzes')
                 ->onDelete('cascade');
 
             $table->unsignedSmallInteger('order');

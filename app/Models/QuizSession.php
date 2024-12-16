@@ -25,7 +25,7 @@ class QuizSession extends Model
     // Relationship to quiz
     public function quiz(): BelongsTo
     {
-        return $this->belongsTo(CourseQuiz::class, 'quiz_id');
+        return $this->belongsTo(Quiz::class, 'quiz_id');
     }
 
     // Helper function for automatic filter for user and admin
@@ -45,7 +45,7 @@ class QuizSession extends Model
                 $new_quiz_sessions[] = [
                     'id' => $quiz_session->id,
                     'completed' => $quiz_session->completed,
-                    'quiz' => CourseQuiz::autoFilter([$quiz_session->quiz])[0],
+                    'quiz' => Quiz::autoFilter([$quiz_session->quiz])[0],
                     'result' => $quiz_session->result,
                 ];
             } else {

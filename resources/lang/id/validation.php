@@ -189,6 +189,7 @@ return [
     'session' => [
         'exists' => 'Kamu sudah memiliki sesi untuk quiz ini.',
         'completed' => 'Kamu sudah menyelesaikan sesi ini.',
+        'question_invalid' => 'Pertanyaan tidak sesuai dengan yang diberikan.',
     ],
 
     /*

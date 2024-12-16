@@ -1,5 +1,7 @@
 export interface QuizSession {
     id: number;
-    course_name: string;
+    name?: string;
+    completed?: boolean;
+    result?: any;
     notified?: boolean;
 }

@@ -25,7 +25,7 @@ class ThService
             'user' => self::partialUserData(),
             'quiz_session' => $quiz_session ? [
                 'id' => $quiz_session->id,
-                'course_name' => $quiz_session->quiz->course->name,
+                'name' => $quiz_session->quiz->name,
             ] : null,
         ];
         return base64_encode(json_encode($final));
@@ -141,19 +141,13 @@ class ThService
         $total_contents = $user_course->course->contents()
             ->count();
 
-        // Check if this course has quiz
-        $quiz = $user_course->course->quiz()
-            ->first();
-
         // Get progress percent with added 1 for quiz, and round it
-        $progress_percent = round(($current_content->order / ($total_contents+(
-            $fullcheck && $quiz != null && $quiz->enabled ? 1 : 0)))*100);
+        $progress_percent = round(($current_content->order / $total_contents)*100);
 
         return [
             'user_course' => $user_course,
             'current_content' => $current_content,
             'total_contents' => $total_contents,
-            'quiz' => $quiz,
             'progress_percent' => $progress_percent,
         ];
     }

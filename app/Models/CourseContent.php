@@ -39,7 +39,6 @@ class CourseContent extends Model
 
         foreach ($contents as $content) {
             $new_contents[] = [
-                'id' => $content->id,
                 'order' => $content->order,
                 'title' => $content->title,
                 'json_content' => $content->json_content,

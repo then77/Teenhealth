@@ -46,7 +46,7 @@ class Course extends Model
     // Relationship to quiz
     public function quiz(): HasMany
     {
-        return $this->hasMany(CourseQuiz::class);
+        return $this->hasMany(Quiz::class);
     }
 
     // Helper function for automatic filter for user and admin

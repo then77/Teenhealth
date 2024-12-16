@@ -11,19 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses_quizzes', function (Blueprint $table) {
+        Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
+            // New: remove course relation, added title and description
+            $table->string('name');
+            $table->longText('description')->nullable();
+
             // Make sure course quiz can be disabled/hidden.
             $table->boolean('enabled')->default(false);
-
-            // Set column course_id as an id to be foreign.
-            // use constrained() to automatically determine
-            // column based on "courses.id".
-            $table->foreignId('course_id')
-                ->constrained()
-                ->onDelete('cascade');
 
             // Quiz type. No function to client currently.
             $table->unsignedTinyInteger('type');
