@@ -15,11 +15,6 @@ export default function About() {
         <Page title="Learn">
             <div className='bg-repeat bg-[#F2F2F2]' style={{ backgroundImage: `url(${square_tile})`, backgroundSize: `24px` }}>
                 <div className='w-full h-min px-view-h-padding py-nm flex flex-col justify-center gap-[30px]'>
-                    <div className='w-full h-min items-center justify-center py-6 flex flex-col'>
-                        <h1 className='text-primary-color text-4xl font-bold mb-2'>Lorem ipsum doret si amet</h1>
-                        <p className='text-black text-opacity-70 font-normal'>Yuk ketahui apa saja yang kita alami saat remaja dan persiapkan diri kita
-                            untuk masa depan yang kita impikan! </p>
-                    </div>
                     <div className='w-full h-min flex flex-col gap-16'>
                         <div className='w-full h-[340px] flex gap-[30px]'>
                             <div className='w-full h-full flex flex-col justify-center gap-[20px]'>
@@ -121,7 +116,7 @@ export default function About() {
                                 </div>
                                 <h1 className='text-primary-color text-5xl font-bold'>Narayana Cokro K.A.</h1>
                                 <p className='text-black text-lg text-opacity-70 font-normal'>
-                                    Lorem ipsum do color si amet adispicing lorem ipsum do si amet adispicing lorem ipsum do color si amet adispicing lorem ipsum do si amet adispicing lorem ipsum do color si amet adispicing.
+                                Hi all! Aku Narayana Cokro, teman-teman biasanya manggil aku Naran.sekarang aku sedang bersekolah di SMK Raden Umar Said Kudus dari jurusan PPLG. Aku memiliki passion di dunia web development dan edukasi!
                                 </p>
                             </div>
                             <div className='w-[420px] h-full border border-black/10'>
