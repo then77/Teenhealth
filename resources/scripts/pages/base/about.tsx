@@ -38,7 +38,7 @@ export default function About() {
                                 </div>
                                 <h1 className='text-primary-color text-5xl font-bold'>Nevan Pratama H.</h1>
                                 <p className='text-black text-lg text-opacity-70 font-normal'>
-                                    Lorem ipsum do color si amet adispicing lorem ipsum do si amet adispicing lorem ipsum do color si amet adispicing lorem ipsum do si amet adispicing lorem ipsum do color si amet adispicing.
+                                    Salam kenal! Saya disini sebagai lead tim Impact. Saya disini juga sebagai web developer Teenhealth, dan berkomitmen untuk memastikan Teenhealth dapat memberikan dampak terbaik, terutama untuk para remaja di Indonesia. 
                                 </p>
                             </div>
                             <div className='w-[420px] h-full border border-black/10'>
@@ -77,7 +77,7 @@ export default function About() {
                                 </div>
                                 <h1 className='text-primary-color text-5xl font-bold'>Adlialfakhri Ziyadatullah</h1>
                                 <p className='text-black text-lg text-opacity-70 font-normal'>
-                                    Lorem ipsum do color si amet adispicing lorem ipsum do si amet adispicing lorem ipsum do color si amet adispicing lorem ipsum do si amet adispicing lorem ipsum do color si amet adispicing.
+                                    Hai, aku Adli. Saya sebagai bagian desainer sekaligus front-end disini. Saya memastikan desain Teenhealth tetap menarik dan juga user friendly agar user kedepan nya lebih tertarik dengan platform Teenhealth.
                                 </p>
                             </div>
                             <div className='w-[420px] h-full border border-black/10'>
